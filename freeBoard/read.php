@@ -293,7 +293,7 @@
                     $r_lock_flag = $row['r_lock_flag']; //비밀 댓글
                     $r_pw = $row['r_pw']; //댓글 비밀번호
 
-                    $class_query = "SELECT * FROM FreeBoard_Reply WHERE r_group=$r_group con_no=$con_no";
+                    $class_query = "SELECT * FROM FreeBoard_Reply WHERE r_group=$r_group and con_no=$con_no";
                     $class_cnt = mysqli_num_rows(mysqli_query($conn, $class_query));
 
                     $next_class = $r_class+1;

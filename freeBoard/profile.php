@@ -152,7 +152,7 @@ $query = "SELECT * FROM FreeBoard_Account WHERE id='$login_id'";
                             <?php
                             } else if ($_GET['mode']=='remove') { 
                                 $delete_query = "DELETE FROM FreeBoard_Account WHERE id='$login_id'";
-                                $result = mysqli_query($conn,$query);
+                                $result = mysqli_query($conn,$delete_query);
                                 require_once('./logout.php');
                             } ?>
                         </table>
