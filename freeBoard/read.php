@@ -219,9 +219,11 @@
             <!--user, date, hit(E)-->
             <!--modify, delete(S)-->
             <td class='post_control_mode'>
+                <a href='write.php?no=<?php echo $con_no; ?>'>답글</a>
             <?php 
                 if ($c_user == $_SESSION['user_name'] || $_SESSION['user_id'] == 'admin') {
             ?>
+                &nbsp;|&nbsp;
                 <a href='modify.php?no=<?php echo $con_no; ?>'>수정</a>
                 &nbsp;|&nbsp;
                 <a href='delete.php?type=post&no=<?php echo $con_no; ?>'>삭제</a>

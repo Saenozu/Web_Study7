@@ -82,15 +82,15 @@ $search_keyword = $_GET['keyword'];
 								<?php
 									if (isset($search_keyword)) {
 										if ($search_target == 'title')
-											$query = "SELECT * FROM FreeBoard_Post WHERE $search_target LIKE \"%$search_keyword%\" ORDER BY no DESC";
+											$query = "SELECT * FROM FreeBoard_Post WHERE $search_target LIKE \"%$search_keyword%\" ORDER BY re_no DESC, depth ASC";
 										else if ($search_target == 'content')
-											$query = "SELECT * FROM FreeBoard_Post WHERE $search_target LIKE \"%$search_keyword%\" ORDER BY no DESC";
+											$query = "SELECT * FROM FreeBoard_Post WHERE $search_target LIKE \"%$search_keyword%\" ORDER BY re_no DESC, depth ASC";
 										else if ($search_target == 'user')
-											$query = "SELECT * FROM FreeBoard_Post WHERE $search_target LIKE \"%$search_keyword%\" ORDER BY no DESC";
+											$query = "SELECT * FROM FreeBoard_Post WHERE $search_target LIKE \"%$search_keyword%\" ORDER BY re_no DESC, depth ASC";
 										else
-											$query = "SELECT * FROM FreeBoard_Post WHERE title LIKE \"%$search_keyword%\" OR content LIKE \"%$search_keyword%\" OR user LIKE \"%$search_keyword%\" ORDER BY no DESC";
+											$query = "SELECT * FROM FreeBoard_Post WHERE title LIKE \"%$search_keyword%\" OR content LIKE \"%$search_keyword%\" OR user LIKE \"%$search_keyword%\" ORDER BY re_no DESC, depth ASC";
 									} else {
-										$query = "SELECT * FROM FreeBoard_Post ORDER BY no DESC";
+										$query = "SELECT * FROM FreeBoard_Post ORDER BY re_no DESC, depth ASC";
 									}
 									
 									if ($result = mysqli_query($conn, $query)) {
@@ -113,16 +113,16 @@ $search_keyword = $_GET['keyword'];
 										//게시글 목록
 										if (isset($search_keyword)) {
 											if ($search_target == 'title')
-												$query = "SELECT * FROM FreeBoard_Post WHERE $search_target LIKE \"%$search_keyword%\" ORDER BY no DESC LIMIT $page_start, $list";
+												$query = "SELECT * FROM FreeBoard_Post WHERE $search_target LIKE \"%$search_keyword%\" ORDER BY re_no DESC, depth ASC LIMIT $page_start, $list";
 											else if ($search_target == 'content')
-											$query = "SELECT * FROM FreeBoard_Post WHERE $search_target LIKE \"%$search_keyword%\" ORDER BY no DESC LIMIT $page_start, $list";
+											$query = "SELECT * FROM FreeBoard_Post WHERE $search_target LIKE \"%$search_keyword%\" ORDER BY re_no DESC, depth ASC LIMIT $page_start, $list";
 											else if ($search_target == 'user')
-												$query = "SELECT * FROM FreeBoard_Post WHERE $search_target LIKE \"%$search_keyword%\" ORDER BY no DESC LIMIT $page_start, $list";
+												$query = "SELECT * FROM FreeBoard_Post WHERE $search_target LIKE \"%$search_keyword%\" ORDER BY re_no DESC, depth ASC LIMIT $page_start, $list";
 											else
-												$query = "SELECT * FROM FreeBoard_Post WHERE title LIKE \"%$search_keyword%\" OR content LIKE \"%$search_keyword%\" OR user LIKE \"%$search_keyword%\" ORDER BY no DESC LIMIT $page_start, $list";
+												$query = "SELECT * FROM FreeBoard_Post WHERE title LIKE \"%$search_keyword%\" OR content LIKE \"%$search_keyword%\" OR user LIKE \"%$search_keyword%\" ORDER BY re_no DESC, depth ASC LIMIT $page_start, $list";
 										}
 										else {
-											$query = "SELECT * FROM FreeBoard_Post ORDER BY no DESC LIMIT $page_start, $list";
+											$query = "SELECT * FROM FreeBoard_Post ORDER BY re_no DESC, depth ASC LIMIT $page_start, $list";
 										}
 										
 										if ($result = mysqli_query($conn, $query)) {
@@ -147,7 +147,10 @@ $search_keyword = $_GET['keyword'];
 													<tr>
 														<td class='post_list_no'><a href='?type=post&no=".$row['no']."'>".$con_no."</a></td>
 														<td class='post_list_title'>
-															<a href='?type=post&no=".$row['no']."'>".$row['title']."
+															<a href='?type=post&no=".$row['no']."' style='padding-left: calc(10px*".$row['depth'].");'>";
+																if($row['depth'] > 0)
+																	echo "<span style='color: #555BD9;'>RE:</span>";
+																echo $row['title']."
 																<p>(".$reply_cnt.")</p><img src='Images/lock_contents_icon.png' alt='locked' class='locked_contents'>
 															</a>
 														</td>
@@ -162,7 +165,12 @@ $search_keyword = $_GET['keyword'];
 													<tr>
 														<td class='post_list_no'><a href='?type=post&no=".$row['no']."'>".$con_no."</a></td>
 														<td class='post_list_title'>
-															<a href='?type=post&no=".$row['no']."'>".$row['title']."<p>(".$reply_cnt.")</p></a>
+															<a href='?type=post&no=".$row['no']."' style='padding-left: calc(10px*".$row['depth'].");'>";
+																if($row['depth'] > 0)
+																	echo "<span style='color: #555BD9;'>RE:</span>";
+																echo $row['title']."
+																<p>(".$reply_cnt.")</p>
+															</a>
 														</td>
 														<td class='post_list_user'><a href='?type=post&no=".$row['no']."'>".$row['user']."</a></td>
 														<td class='post_list_date'><a href='?type=post&no=".$row['no']."'>".$date."</a></td>

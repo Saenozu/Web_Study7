@@ -10,9 +10,6 @@
 <head>
     <meta charset="UTF-8">
 	<title> 2022 자유게시판 </title>
-	<style>
-        
-	</style>
 	<link href="style" rel="stylesheet" type="text/css" />
     <link rel="shortcut icon" href="#">
 </head>
@@ -109,18 +106,10 @@
             if ($_FILES['uploadfile']['size'] == 0) {
                 if ($_POST['locked']) {
                     $query = "INSERT INTO FreeBoard_Post(user, title, content, pw, lock_flag) VALUES (\"$login_name\", \"".$_POST['title']."\", \"".$_POST['content']."\", \"".$_POST['pw']."\", 1)";
-                    if ($result = mysqli_query($conn, $query)) {
-                        echo "<script>location.href='./';</script>";
-                    } else {
-                        echo ("<script>alert('저장을 실패했습니다.'); location.href=location.href;</script>");
-                    }
+                    $result = mysqli_query($conn, $query);
                 } else {
                     $query = "INSERT INTO FreeBoard_Post(user, title, content) VALUES (\"$login_name\", \"".$_POST['title']."\", \"".$_POST['content']."\")";
-                    if ($result = mysqli_query($conn, $query)) {
-                        echo "<script>location.href='./';</script>";
-                    } else {
-                        echo ("<script>alert('저장을 실패했습니다.'); location.href=location.href;</script>");
-                    }
+                    $result = mysqli_query($conn, $query);
                 }
             } else {
                 $file = $_FILES['uploadfile'];
@@ -131,22 +120,28 @@
                 if (move_uploaded_file($file_tmp,$path.$file_name)){
                     if ($_POST['locked']) {
                         $query = "INSERT INTO FreeBoard_Post(user, title, content, file, pw, lock_flag) VALUES (\"$login_name\", \"".$_POST['title']."\", \"".$_POST['content']."\", \"$file_name\", \"".$_POST['pw']."\", 1)";
-                        if ($result = mysqli_query($conn, $query)) {
-                            echo "<script>location.href='./';</script>";
-                        } else {
-                            echo ("<script>alert('저장을 실패했습니다.'); location.href=location.href;</script>");
-                        }
+                        $result = mysqli_query($conn, $query);
                     } else {
                         $query = "INSERT INTO FreeBoard_Post(user, title, content, file) VALUES (\"$login_name\", \"".$_POST['title']."\", \"".$_POST['content']."\", \"$file_name\")";
-                        if ($result = mysqli_query($conn, $query)) {
-                            echo "<script>location.href='./';</script>";
-                        } else {
-                            echo ("<script>alert('저장을 실패했습니다.'); location.href=location.href;</script>");
-                        }
+                        $result = mysqli_query($conn, $query);
                     }
-                } else {
-                    echo ("<script>alert('저장을 실패했습니다.'); location.href=location.href;</script>");
                 }
+            }
+            if (isset($_GET['no'])) {
+                $con_no = $_GET['no'];
+                $query = "SELECT * FROM FreeBoard_Post WHERE no=$con_no";
+                mysqli_num_rows($result = mysqli_query($conn, $query));
+                $row = mysqli_fetch_array($result);
+                $con_depth = $row['depth'];
+                $re_no = $row['re_no'];
+                $next_depth = $con_depth+1;
+                $depth_query = "UPDATE FreeBoard_Post SET depth=$next_depth, re_no=$re_no ORDER BY no DESC LIMIT 1";
+                mysqli_query($conn, $depth_query);
+                echo "<script>location.href='./';</script>";
+            } else {
+                $depth_query = "UPDATE FreeBoard_Post SET re_no=no ORDER BY no DESC LIMIT 1";
+                mysqli_query($conn, $depth_query);
+                echo "<script>location.href=location.href;</script>";
             }
         }
     }

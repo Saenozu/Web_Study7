@@ -178,7 +178,8 @@ label {
 .post_list_title a {
     text-align: left;
 }
-.post_list_title a p {
+.post_list_title a p,
+.post_list_title a span {
     padding: 5px;
     color: #95A5BA;
     display: inline;

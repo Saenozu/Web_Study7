@@ -14,7 +14,7 @@
         $query = "SELECT * FROM FreeBoard_Post WHERE no=$con_no";
         if (mysqli_num_rows($result = mysqli_query($conn,$query))) {
             $row = mysqli_fetch_array($result);
-            if ($login_user != $row['user'] && $login_id != 'admin') { 
+            if ($login_name != $row['user'] && $login_id != 'admin') { 
                 echo "<script>location.href='./?type=post&no=$con_no'</script>;";
             }else {
                 //게시글
@@ -31,7 +31,7 @@
         $query = "SELECT * FROM FreeBoard_Reply WHERE r_no=$r_no";
         if (mysqli_num_rows($result = mysqli_query($conn,$query))) {
             $row = mysqli_fetch_array($result);
-            if ($login_user != $row['user'] && $login_id != 'admin') { 
+            if ($login_name != $row['user'] && $login_id != 'admin') { 
                 echo "<script>location.href='./?type=post&no=$con_no'</script>;";
             } else {
                 $delete_query = "DELETE FROM FreeBoard_Reply WHERE r_no=$r_no";
