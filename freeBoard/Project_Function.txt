@@ -88,3 +88,5 @@ ALTER TABLE FreeBoard_Post ADD re_no INT(11) DEFAULT 0 NOT NULL AFTER depth;
 SELECT no, title, depth, re_no FROM FreeBoard_Post ORDER BY re_no DESC, depth ASC;
 
 UPDATE FreeBoard_Post SET depth=depth+1, re_no=7 ORDER BY no DESC LIMIT 1;
+
+SELECT no, title, depth, re_no FROM FreeBoard_Post ORDER BY re_no DESC, no ASC, depth ASC;

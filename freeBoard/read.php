@@ -19,6 +19,13 @@
         $c_hit = $row['hit'];
         $c_up = $row['up'];
         $c_down = $row['down'];
+        $c_depth = $row['depth'];
+        $c_origin = $row['re_no'];
+    }
+    $query = "SELECT * FROM FreeBoard_Post WHERE no=$c_origin";
+    if (mysqli_num_rows($result = mysqli_query($conn,$query))) {
+        $row = mysqli_fetch_array($result);
+        $c_origin_user = $row['user'];
     }
 ?>
 <style>
@@ -179,7 +186,7 @@
 </style>
 <?php
     if ($c_lock_flag) { //비밀글
-        if ($c_user != $_SESSION['user_name'] && $_SESSION['user_id'] != 'admin') { //작성자 또는 관리자가 아니면 비밀번호 입력
+        if ($c_user != $login_name && $_SESSION['user_id'] != 'admin' && $c_origin_user != $login_name ) { //작성자 또는 관리자가 아니면 비밀번호 입력
             require('pw_check.php');
             if ($pw_try == $c_pw) {
                 $_SESSION['access'] = true;
@@ -204,7 +211,11 @@
 <div id='post_read_wrap'>
     <table id='post_read_table'>
         <!--title(S)-->
-        <tr><td colspan='2'><h3 id='post_title'><?php echo $c_title; ?></h3></td></tr>
+        <tr>
+            <td colspan='2'>
+                <h3 id='post_title'><?php if($c_depth > 0) {echo "<span style='color: #555BD9;'>RE: </span>";} echo $c_title; ?></h3>
+            </td>
+        </tr>
         <!--title(E)-->
         <!--post info(S)-->
         <tr>

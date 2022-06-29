@@ -82,15 +82,15 @@ $search_keyword = $_GET['keyword'];
 								<?php
 									if (isset($search_keyword)) {
 										if ($search_target == 'title')
-											$query = "SELECT * FROM FreeBoard_Post WHERE $search_target LIKE \"%$search_keyword%\" ORDER BY re_no DESC, depth ASC";
+											$query = "SELECT * FROM FreeBoard_Post WHERE $search_target LIKE \"%$search_keyword%\" ORDER BY re_no DESC, no ASC, depth ASC";
 										else if ($search_target == 'content')
-											$query = "SELECT * FROM FreeBoard_Post WHERE $search_target LIKE \"%$search_keyword%\" ORDER BY re_no DESC, depth ASC";
+											$query = "SELECT * FROM FreeBoard_Post WHERE $search_target LIKE \"%$search_keyword%\" ORDER BY re_no DESC, no ASC, depth ASC";
 										else if ($search_target == 'user')
-											$query = "SELECT * FROM FreeBoard_Post WHERE $search_target LIKE \"%$search_keyword%\" ORDER BY re_no DESC, depth ASC";
+											$query = "SELECT * FROM FreeBoard_Post WHERE $search_target LIKE \"%$search_keyword%\" ORDER BY re_no DESC, no ASC, depth ASC";
 										else
-											$query = "SELECT * FROM FreeBoard_Post WHERE title LIKE \"%$search_keyword%\" OR content LIKE \"%$search_keyword%\" OR user LIKE \"%$search_keyword%\" ORDER BY re_no DESC, depth ASC";
+											$query = "SELECT * FROM FreeBoard_Post WHERE title LIKE \"%$search_keyword%\" OR content LIKE \"%$search_keyword%\" OR user LIKE \"%$search_keyword%\" ORDER BY re_no DESC, no ASC, depth ASC";
 									} else {
-										$query = "SELECT * FROM FreeBoard_Post ORDER BY re_no DESC, depth ASC";
+										$query = "SELECT * FROM FreeBoard_Post ORDER BY re_no DESC, no ASC, depth ASC";
 									}
 									
 									if ($result = mysqli_query($conn, $query)) {
@@ -113,16 +113,16 @@ $search_keyword = $_GET['keyword'];
 										//게시글 목록
 										if (isset($search_keyword)) {
 											if ($search_target == 'title')
-												$query = "SELECT * FROM FreeBoard_Post WHERE $search_target LIKE \"%$search_keyword%\" ORDER BY re_no DESC, depth ASC LIMIT $page_start, $list";
+												$query = "SELECT * FROM FreeBoard_Post WHERE $search_target LIKE \"%$search_keyword%\" ORDER BY re_no DESC, no ASC, depth ASC LIMIT $page_start, $list";
 											else if ($search_target == 'content')
-											$query = "SELECT * FROM FreeBoard_Post WHERE $search_target LIKE \"%$search_keyword%\" ORDER BY re_no DESC, depth ASC LIMIT $page_start, $list";
+											$query = "SELECT * FROM FreeBoard_Post WHERE $search_target LIKE \"%$search_keyword%\" ORDER BY re_no DESC, no ASC, depth ASC LIMIT $page_start, $list";
 											else if ($search_target == 'user')
-												$query = "SELECT * FROM FreeBoard_Post WHERE $search_target LIKE \"%$search_keyword%\" ORDER BY re_no DESC, depth ASC LIMIT $page_start, $list";
+												$query = "SELECT * FROM FreeBoard_Post WHERE $search_target LIKE \"%$search_keyword%\" ORDER BY re_no DESC, no ASC, depth ASC LIMIT $page_start, $list";
 											else
-												$query = "SELECT * FROM FreeBoard_Post WHERE title LIKE \"%$search_keyword%\" OR content LIKE \"%$search_keyword%\" OR user LIKE \"%$search_keyword%\" ORDER BY re_no DESC, depth ASC LIMIT $page_start, $list";
+												$query = "SELECT * FROM FreeBoard_Post WHERE title LIKE \"%$search_keyword%\" OR content LIKE \"%$search_keyword%\" OR user LIKE \"%$search_keyword%\" ORDER BY re_no DESC, no ASC, depth ASC LIMIT $page_start, $list";
 										}
 										else {
-											$query = "SELECT * FROM FreeBoard_Post ORDER BY re_no DESC, depth ASC LIMIT $page_start, $list";
+											$query = "SELECT * FROM FreeBoard_Post ORDER BY re_no DESC, no ASC, depth ASC LIMIT $page_start, $list";
 										}
 										
 										if ($result = mysqli_query($conn, $query)) {
